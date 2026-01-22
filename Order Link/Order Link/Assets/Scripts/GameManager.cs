@@ -1,9 +1,11 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using System;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager Instance;
     private List<int> patternList;
     private List<int> collectionsArray;
     private List<int> playerGuessPatternList;
@@ -17,10 +19,18 @@ public class GameManager : MonoBehaviour
 
     private int numberOfCorrectGuesses;
     private int correctAmountOfNumbersInPattern;
+    private int numberOfTurns;
     private bool once = false;
+
+    public event EventHandler<OnGuessMadeEventArgs> OnGuessMade;
+    public class OnGuessMadeEventArgs : EventArgs
+    {
+        public List<int> playerPatternList;
+    }
 
     private void Awake()
     {
+        Instance = this;
         patternList = new List<int>();
         collectionsArray = new List<int>();
         playerGuessPatternList = new List<int>();
@@ -78,7 +88,7 @@ public class GameManager : MonoBehaviour
 
     private int ReturnRandomNumberFromCollection()
     {
-        int index = Random.Range(0, collectionsArray.Count);
+        int index = UnityEngine.Random.Range(0, collectionsArray.Count);
         int randomNumber = collectionsArray[index];
         collectionsArray.Remove(randomNumber);
         return randomNumber;
@@ -106,7 +116,10 @@ public class GameManager : MonoBehaviour
 
     private void PatternCheck()
     {
-        
+        OnGuessMade?.Invoke(this, new OnGuessMadeEventArgs
+        {
+            playerPatternList = playerGuessPatternList
+        });
         for(int i=0;i<patternList.Count;i++)
         {
             if (patternList[i]  == playerGuessPatternList[i])
