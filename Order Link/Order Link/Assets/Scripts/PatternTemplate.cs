@@ -4,19 +4,24 @@ using TMPro;
 public class PatternTemplate : MonoBehaviour
 {
     [SerializeField] private TMP_Text chosenPatternText;
+    private bool once = false;
 
     private void Start()
     {
         chosenPatternText.text = "";
-        GameManager.Instance.OnGuessMade += GameManager_OnGuessMade;
+        PatternHolder.Instance.OnPatternTemplateInstantiated += PatternHolder_OnPatternTemplateInstantiated;
     }
 
-    private void GameManager_OnGuessMade(object sender, GameManager.OnGuessMadeEventArgs e)
+    private void PatternHolder_OnPatternTemplateInstantiated(object sender, PatternHolder.OnPatternTemplateInstantiatedEventArgs e)
     {
-        chosenPatternText.text = "";
-        foreach (int i in e.playerPatternList)
+        if(!once)
         {
-            chosenPatternText.text += i.ToString();
+            once = true;
+            foreach (int i in e.currentGuessPattern)
+            {
+                chosenPatternText.text += i.ToString();
+            }
         }
+        
     }
 }
