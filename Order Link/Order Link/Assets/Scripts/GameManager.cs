@@ -26,6 +26,8 @@ public class GameManager : MonoBehaviour
     public class OnGuessMadeEventArgs : EventArgs
     {
         public List<int> playerPatternList;
+        public int numberOfCorrectGuess;
+        public int correctAmountOfNumbersInPatternGuessed;
     }
 
     private void Awake()
@@ -115,11 +117,7 @@ public class GameManager : MonoBehaviour
     }
 
     private void PatternCheck()
-    {
-        OnGuessMade?.Invoke(this, new OnGuessMadeEventArgs
-        {
-            playerPatternList = playerGuessPatternList
-        });
+    { 
         for(int i=0;i<patternList.Count;i++)
         {
             if (patternList[i]  == playerGuessPatternList[i])
@@ -127,6 +125,12 @@ public class GameManager : MonoBehaviour
                 numberOfCorrectGuesses++;
             }
         }
+        OnGuessMade?.Invoke(this, new OnGuessMadeEventArgs
+        {
+            playerPatternList = playerGuessPatternList,
+            correctAmountOfNumbersInPatternGuessed = correctAmountOfNumbersInPattern,
+            numberOfCorrectGuess = numberOfCorrectGuesses
+        });
         Debug.Log("Number of correct guesses = " + numberOfCorrectGuesses);
         Debug.Log("Number of correct numbers in pattern = " + correctAmountOfNumbersInPattern);
         if(numberOfCorrectGuesses == patternList.Count)
