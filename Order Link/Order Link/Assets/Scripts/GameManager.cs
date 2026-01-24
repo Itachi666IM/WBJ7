@@ -47,36 +47,48 @@ public class GameManager : MonoBehaviour
             playerGuessPatternList.Add(1);
             NumbersCheck(1);
             button1.gameObject.SetActive(false);
+            GuessButton guessButton = button1.GetComponent<GuessButton>();
+            guessButton.PerformChainPullAnimation();
         });
         button2.onClick.AddListener(() =>
         {
             playerGuessPatternList.Add(2);
             NumbersCheck(2);
             button2.gameObject.SetActive(false);
+            GuessButton guessButton = button2.GetComponent<GuessButton>();
+            guessButton.PerformChainPullAnimation();
         });
         button3.onClick.AddListener(() =>
         {
             playerGuessPatternList.Add(3);
             NumbersCheck(3);
             button3.gameObject.SetActive(false);
+            GuessButton guessButton = button3.GetComponent<GuessButton>();
+            guessButton.PerformChainPullAnimation();
         });
         button4.onClick.AddListener(() =>
         {
             playerGuessPatternList.Add(4);
             NumbersCheck(4);
             button4.gameObject.SetActive(false);
+            GuessButton guessButton = button4.GetComponent<GuessButton>();
+            guessButton.PerformChainPullAnimation();
         });
         button5.onClick.AddListener(() =>
         {
             playerGuessPatternList.Add(5);
             NumbersCheck(5);
             button5.gameObject.SetActive(false);
+            GuessButton guessButton = button5.GetComponent<GuessButton>();
+            guessButton.PerformChainPullAnimation();
         });
         button6.onClick.AddListener(() =>
         {
             playerGuessPatternList.Add(6);
             NumbersCheck(6);
             button6.gameObject.SetActive(false);
+            GuessButton guessButton = button6.GetComponent<GuessButton>();
+            guessButton.PerformChainPullAnimation();
         });
     }
 
