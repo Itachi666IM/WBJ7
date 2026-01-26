@@ -20,6 +20,7 @@ public class Tutorial : MonoBehaviour
         currentString = textStrings[index];
         nextButton.onClick.AddListener(() =>
         {
+            nextButton.gameObject.SetActive(false);
             NextSentence();
         });
 
@@ -64,6 +65,7 @@ public class Tutorial : MonoBehaviour
             displayText.text += c;
             yield return new WaitForSeconds(typingSpeed);
         }
+        nextButton.gameObject.SetActive(true);
         yield return new WaitForSeconds(typingSpeed);
     }
 }
