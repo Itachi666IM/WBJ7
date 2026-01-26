@@ -2,6 +2,8 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using System;
+using UnityEngine.SceneManagement;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -17,9 +19,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Button button5;
     [SerializeField] private Button button6;
 
+    [SerializeField] private TMP_Text turnsLeftText;
+
     private int numberOfCorrectGuesses;
     private int correctAmountOfNumbersInPattern;
-    private int numberOfTurns;
+    private int numberOfTurns = 18;
+    private int turns = 0;
     private bool once = false;
 
     public event EventHandler<OnGuessMadeEventArgs> OnGuessMade;
@@ -116,18 +121,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-
-        if(patternList.Count >0)
-        {
-            foreach(int i in patternList)
-            {
-                Debug.Log(i);
-            }
-        }
-    }
-
     private void PatternCheck()
     { 
         for(int i=0;i<patternList.Count;i++)
@@ -143,15 +136,16 @@ public class GameManager : MonoBehaviour
             correctAmountOfNumbersInPatternGuessed = correctAmountOfNumbersInPattern,
             numberOfCorrectGuess = numberOfCorrectGuesses
         });
-        Debug.Log("Number of correct guesses = " + numberOfCorrectGuesses);
-        Debug.Log("Number of correct numbers in pattern = " + correctAmountOfNumbersInPattern);
+      
         if(numberOfCorrectGuesses == patternList.Count)
         {
-            Debug.Log("You Win!");
+            SceneManager.LoadScene("Win");
         }
         else
         {
             ClearAllNumbersAndPatterns();
+            turns++;
+            UpdateTurnsLeft();
         }
         
     }
@@ -190,5 +184,17 @@ public class GameManager : MonoBehaviour
             button6.gameObject.SetActive(false);
             PatternCheck();
         }
+
+        if(turns >= numberOfTurns)
+        {
+            SceneManager.LoadScene("Lose");
+        }
+    }
+
+    private void UpdateTurnsLeft()
+    {
+        turnsLeftText.text = "";
+        int remainingTurns = numberOfTurns - turns;
+        turnsLeftText.text = "Turns Left : " + remainingTurns;
     }
 }
