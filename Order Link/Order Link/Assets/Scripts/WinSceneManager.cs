@@ -11,7 +11,7 @@ public class WinSceneManager : MonoBehaviour
     {
         restartButton.onClick.AddListener(() =>
         {
-            SceneManager.LoadScene("Game");
+            SceneManager.LoadScene(0);
         });
         quitButton.onClick.AddListener(() =>
         {
